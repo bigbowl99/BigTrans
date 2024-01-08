@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>BigbowlTrans</id>
+    <version>1.0.0</version>
+    <authors>BigbowlTrans</authors>
+    <description>Package Description</description>
+    <repository type="git" />
+    <dependencies>
+      <group targetFramework="net8.0-windows7.0">
+        <dependency id="OpenAI" version="1.10.0" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+    <frameworkReferences>
+      <group targetFramework="net8.0-windows7.0">
+        <frameworkReference name="Microsoft.WindowsDesktop.App.WindowsForms" />
+      </group>
+    </frameworkReferences>
+    <contentFiles>
+      <files include="any/net8.0-windows7.0/images/favicon_io/favicon.ico" buildAction="Content" />
+    </contentFiles>
+  </metadata>
+  <files>
+    <file src="D:\projects\BigbowlTrans\BigbowlTrans\bin\Release\net8.0-windows\BigbowlTrans.runtimeconfig.json" target="lib\net8.0-windows7.0\BigbowlTrans.runtimeconfig.json" />
+    <file src="D:\projects\BigbowlTrans\BigbowlTrans\bin\Release\net8.0-windows\BigbowlTrans.dll" target="lib\net8.0-windows7.0\BigbowlTrans.dll" />
+    <file src="D:\projects\BigbowlTrans\BigbowlTrans\images\favicon_io\favicon.ico" target="content\images\favicon_io\favicon.ico" />
+    <file src="D:\projects\BigbowlTrans\BigbowlTrans\images\favicon_io\favicon.ico" target="contentFiles\any\net8.0-windows7.0\images\favicon_io\favicon.ico" />
+  </files>
+</package>

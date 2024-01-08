@@ -1,0 +1,16 @@
+﻿user: Companies such as 
+@OVHcloud
+ and 
+@Scaleway
+ are European leads in computing and hosting..
+chatbot:.
+user: Companies such as 
+@OVHcloud
+ and 
+@Scaleway
+ are European leads in computing and hosting..
+chatbot:
+如@OVHcloud和@Scaleway等公司是欧洲在计算和托管方面的领先者。.
+user: If you need to memorize it, then you didn't understand it.
+chatbot:
+如果你需要记住它，那么你就没有理解它。.
