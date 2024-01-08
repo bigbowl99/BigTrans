@@ -48,7 +48,7 @@ namespace BigbowlTrans
         private void InitOpenAI()
         {
             Configuration config = new Configuration();
-            //key_api = new OpenAIAPI("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");
+           
             key_api = new OpenAIAPI(config.OpenAIKey);
             key_chat = key_api.Chat.CreateConversation();
             key_chat.Model = OpenAI_API.Models.Model.ChatGPTTurbo;
