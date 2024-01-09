@@ -179,7 +179,7 @@
             Controls.Add(btnLeft2Right);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "MainForm";
-            Text = "BigbowlTrans";
+            Text = "BigTrans";
             FormClosing += MainForm_FormClosing;
             Load += MainForm_Load;
             KeyDown += MainForm_KeyDown;

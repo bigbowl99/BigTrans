@@ -49,7 +49,7 @@ namespace BigbowlTrans
         {
             Configuration config = new Configuration();
            
-            key_api = new OpenAIAPI(config.OpenAIKey);
+            key_api = new OpenAIAPI(config.OpenAIKey,config.ProxyServer);
             key_chat = key_api.Chat.CreateConversation();
             key_chat.Model = OpenAI_API.Models.Model.ChatGPTTurbo;
             key_chat.RequestParameters.Temperature = 0;
@@ -211,6 +211,8 @@ namespace BigbowlTrans
             //Configuration.EditConfigFileWithNotepad();
             SettingForm settingForm = new SettingForm();
             settingForm.ShowDialog();
+            //无论settingForm是否更改了配置文件，都要重新加载配置文件
+            InitOpenAI();
         }
 
         private void btnHistory_Click(object sender, EventArgs e)

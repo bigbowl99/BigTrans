@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BigbowlTrans")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1528d8e82cf1c2e8d8bc74ee721f7d426f3d622f")]
 [assembly: System.Reflection.AssemblyProductAttribute("BigbowlTrans")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BigbowlTrans")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

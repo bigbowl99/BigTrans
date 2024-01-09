@@ -43,6 +43,11 @@ namespace BigbowlTrans
                                 break;
                             case "ProxyServer":
                                 ProxyServer = value;
+                                //如果代理服务器域名不符合域名规范，就清空
+                                if (!Uri.CheckHostName(ProxyServer).Equals(UriHostNameType.Dns))
+                                {
+                                    ProxyServer = string.Empty;
+                                }
                                 break;
                             case "GeminiKey":
                                 GeminiKey = value;
@@ -69,9 +74,9 @@ namespace BigbowlTrans
             {
                 var defaultContent = new List<string>
             {
-                "OpenAIKey=NULL",
-                "ProxyServer=NULL",
-                "GeminiKey=NULL",
+                "OpenAIKey=",
+                "ProxyServer=",
+                "GeminiKey=",
                 "Instruction=You are an excellent master of Chinese-English translation, automatically recognizing whether the input text is in Chinese or English, responsible for translating from Chinese to English and from English to Chinese. If the input is an English word, you act as a dictionary, providing the Chinese and English definitions, pronunciation, and common usage sentences of the word. If the input is a Chinese term, you provide various common expressions of the term in English, noting that the corresponding expressions may not necessarily be single English words, but could also be combinations of words."
             };
 
