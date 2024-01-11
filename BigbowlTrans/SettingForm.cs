@@ -15,6 +15,7 @@ namespace BigbowlTrans
         public SettingForm()
         {
             InitializeComponent();
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
         }
 
       

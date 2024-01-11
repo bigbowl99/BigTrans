@@ -5,6 +5,8 @@ using System.Text;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
+using Microsoft.Win32;
+using System.Reflection;
 
 
 
@@ -31,12 +33,13 @@ namespace BigbowlTrans
 
         private OpenAIAPI key_api;
         private OpenAI_API.Chat.Conversation key_chat;
-        private static readonly string filePath = "chatLog.txt";
+        private static readonly string filePath = "chatLog.html";
 
 
         public MainForm()
         {
             InitializeComponent();
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi; // 或 AutoScaleMode.Dpi
             this.KeyPreview = true;
             GlobalHotKey.HotkeyPressed += GlobalHotkey_HotkeyPressed;
 
@@ -76,7 +79,18 @@ namespace BigbowlTrans
         }
         private void MainForm_Load(object sender, EventArgs e)
         {
+            Rectangle screenSize = Screen.PrimaryScreen.Bounds;
+
+            // 设置窗口的最大大小为屏幕的宽度和高度的某个百分比
+            int maxWidth = (int)(screenSize.Width * 0.9); // 例如，屏幕宽度的 80%
+            int maxHeight = (int)(screenSize.Height * 0.9); // 屏幕高度的 80%
+
+            // 设置窗口的大小，但不超过最大值
+            this.Size = new Size(Math.Min(1280, maxWidth), Math.Min(960, maxHeight));
             GlobalHotKey.SetHook();
+
+            //设置自启动
+            SetAutoStart("bigbowltrans", true);
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -194,17 +208,59 @@ namespace BigbowlTrans
         {
             try
             {
-                // 构建要保存的字符串
-                string logEntry = $"user: {userMessage}.\r\nchatbot:{AIMessage}.\r\n";
+                string newTableRow = $@"
+                                        <tr>
+                                            <td>{userMessage.Replace("\r\n", "<br>")}</td>
+                                            <td>{AIMessage.Replace("\r\n", "<br>")}</td>
+                                        </tr>";
 
-                // 将字符串追加到文件
-                File.AppendAllText(filePath, logEntry, Encoding.UTF8);
+                if (!File.Exists(filePath))
+                {
+                    string htmlStart = $@"
+                                        <html>
+                                        <head>
+                                            <title>Chat Log</title>
+                                            <style>
+                                                body {{ font-family: Arial, sans-serif; }}
+                                                table {{ width: 100%; border-collapse: collapse; }}
+                                                th {{ background-color: #90ee90; }} /* 绿色小清新标题头颜色 */
+                                                td {{ padding: 10px; vertical-align: top; text-align: left; }}
+                                                .header {{ text-align: center; }}
+                                            </style>
+                                        </head>
+                                        <body>
+                                            <h2 class='header'>Chat Session Log</h2>
+                                            <table>
+                                                <tr>
+                                                    <th>源文字</th>
+                                                    <th>目标文字</th>
+                                                </tr>
+                                                {newTableRow}
+                                            </table>
+                                        </body>
+                                        </html>";
+
+                    File.WriteAllText(filePath, htmlStart, Encoding.UTF8);
+                }
+                else
+                {
+                    // 读取现有文件内容
+                    string htmlContent = File.ReadAllText(filePath, Encoding.UTF8);
+
+                    // 在 </table> 标签前插入新的聊天记录
+                    htmlContent = htmlContent.Replace("</table>", $"{newTableRow}</table>");
+
+                    // 重写文件
+                    File.WriteAllText(filePath, htmlContent, Encoding.UTF8);
+                }
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error saving chat message: {ex.Message}");
             }
         }
+
+
 
         private void btnSetting_Click(object sender, EventArgs e)
         {
@@ -217,7 +273,7 @@ namespace BigbowlTrans
 
         private void btnHistory_Click(object sender, EventArgs e)
         {
-            Process.Start("notepad.exe", filePath);
+            System.Diagnostics.Process.Start("explorer", $"\"{filePath}\"");
         }
 
         private void btnClear_Click(object sender, EventArgs e)
@@ -229,6 +285,23 @@ namespace BigbowlTrans
         private void pbLoading_Click(object sender, EventArgs e)
         {
 
+        }
+
+        public static void SetAutoStart(string appName, bool enable)
+        {
+            string exePath = Assembly.GetExecutingAssembly().Location;
+
+            using (var key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true))
+            {
+                if (enable)
+                {
+                    key.SetValue(appName, exePath);
+                }
+                else
+                {
+                    key.DeleteValue(appName, false);
+                }
+            }
         }
     }
 
